@@ -8,6 +8,7 @@
 oclif.manifest.json
 
 
+flake.lock
 yarn.lock
 package-lock.json
 

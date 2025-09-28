@@ -6,7 +6,7 @@
   "bin": {
     "cossack-crypto-candymachinecli": "./bin/run.js"
   },
-  "bugs": "https://github.com/https://github.com/Cossack-Crypto-Crusade/cossack-crypto-candymachinecli/cossack-crypto-candymachinecli/issues",
+  "bugs": "https://github.com/Cossack-Crypto-Crusade/cossack-crypto-candymachinecli/issues",
   "dependencies": {
     "@oclif/core": "^4",
     "@oclif/plugin-help": "^6",
@@ -23,6 +23,8 @@
     "eslint": "^9",
     "eslint-config-oclif": "^6",
     "eslint-config-prettier": "^10",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.1",
     "mocha": "^10",
     "oclif": "^4",
     "shx": "^0.3.3",
@@ -37,7 +39,7 @@
     "./dist",
     "./oclif.manifest.json"
   ],
-  "homepage": "https://github.com/https://github.com/Cossack-Crypto-Crusade/cossack-crypto-candymachinecli/cossack-crypto-candymachinecli",
+  "homepage": "https://github.com/Cossack-Crypto-Crusade/cossack-crypto-candymachinecli",
   "keywords": [
     "oclif"
   ],
@@ -59,15 +61,27 @@
       }
     }
   },
-  "repository": "https://github.com/Cossack-Crypto-Crusade/cossack-crypto-candymachinecli/cossack-crypto-candymachinecli",
+  "repository": "https://github.com/Cossack-Crypto-Crusade/cossack-crypto-candymachinecli",
   "scripts": {
     "build": "shx rm -rf dist && tsc -b",
-    "lint": "eslint",
+    "lint": "eslint . --ext .ts,.js",
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "pnpm run lint",
     "prepack": "oclif manifest && oclif readme",
     "test": "mocha --forbid-only \"test/**/*.test.ts\"",
-    "version": "oclif readme && git add README.md"
+    "version": "oclif readme && git add README.md",
+    "typecheck": "tsc --noEmit",
+    "precommit": "npm run lint && npm run typecheck && npm run test",
+    "prepare": "husky install"
   },
-  "types": "dist/index.d.ts"
+  "types": "dist/index.d.ts",
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  }
 }
